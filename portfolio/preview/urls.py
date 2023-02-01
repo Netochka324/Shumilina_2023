@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.preview, name='preview'),
+    path('', views.project_index, name='project-index'),
+    path('<int:pk>/', views.project_detail, name='project-detail')
 ]

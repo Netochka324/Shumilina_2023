@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+    <div class="album bg-light">
+        <div class="container-fluid">
+            {% comment %}<div class="grid text-center">{% endcomment %}
+
+            <div class="container-fluid text-center"
+                 style="background-color: #4ac1f7; padding-top: 10px; padding-bottom: 10px">
+                <h2>My projects</h2>
+            </div>
+
+            <div class="card-group">
+                <div class="g-col-md-5-push-7">
+                    <div class="row justify-content-center">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
+                            {% for project in vse_posti %}
+                                <div class="card">
+                                    <div class="mx-auto" style="margin-top: 20px;">
+                                        <img class="card-img-top rounded thumbnail"
+                                             src="{% static project.image %}" alt="" width="80%" height="100" role="img">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ project.title }}</h5>
+                                        <p class="card-text project-description mb-4">{{ project.description }}</p>
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <a href="{% url 'project-detail' project.pk %}"
+                                           class="btn btn-primary ">
+                                            Подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}
