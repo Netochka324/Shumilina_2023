@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="col-md-8 offset-md-2", style="background-color: white; font-size: medium">
+<h2>Razdel 2</h2>
+<hr>
+    {% for post in posts %}
+        {% if post.categories.name == "razdel_2" %}
+            <h2><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
+            <small>
+                {{ post.created_on.date }} |&nbsp;{{ post.created_on.time }}
+            </small>
+            <p>{{ post.body | slice:":400" }}...</p>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

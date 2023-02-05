@@ -10,22 +10,23 @@
                 <h2>My projects</h2>
             </div>
 
-            <div class="card-group">
-                <div class="g-col-md-5-push-7">
+
+            <div class="card-group" style="padding: 20px">
+                {% comment %}<div class="g-col-md-5-push-7">
                     <div class="row justify-content-center">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">{% endcomment %}
                             {% for project in vse_posti %}
                                 <div class="card">
                                     <div class="mx-auto" style="margin-top: 20px;">
                                         <img class="card-img-top rounded thumbnail"
-                                             src="{% static project.image %}" alt="" width="80%" height="100" role="img">
+                                             src="{% static project.image %}" alt="" width="80%" height="150" role="img">
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ project.title }}</h5>
+                                        <h3 class="card-title"><strong>{{ project.title }}</strong></h3>
                                         <p class="card-text project-description mb-4">{{ project.description }}</p>
                                     </div>
                                     <div class="card-footer text-right">
-                                        <a href="{% url 'project-detail' project.pk %}"
+                                        <a href="{% url 'project_detail' project.pk %}"
                                            class="btn btn-primary ">
                                             Подробнее
                                         </a>
@@ -34,7 +35,7 @@
                             {% endfor %}
                         </div>
                     </div>
-                </div>
+               {% comment %} </div>{% endcomment %}
             </div>
         </div>
     </div>

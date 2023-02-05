@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+  <h1>Блог</h1>
+    <div class="container" style="background-color: white">
+        <ul>
+            <li><a class="button btn-info" href="{% url 'blog_category_1' %}">razdel_1</a></li>
+            <li><a class="button btn-info" href="{% url 'blog_category_2' %}">razdel_2</a></li>
+            <li><a class="button btn-info" href="{% url 'blog_category_3' %}">razdel_3</a></li>
+        </ul>
+    </div>
+  <hr>
+
+  {% for post in vse_posti %}
+        <div>
+          <h2><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
+          <small>
+              {{ post.created_on.date }} {{post.created_on.time }}<br>
+                  Categories: {{ post.categories.name }}
+              {% for category in post.categories.all %}
+              <a href="">
+                  {{ category.name }}
+              </a>
+              {% endfor %}
+          </small>
+          <p>{{ post.body | slice:":400" }}...</p>
+        </div>
+  {% endfor %}
+</div>
+{% endblock %}

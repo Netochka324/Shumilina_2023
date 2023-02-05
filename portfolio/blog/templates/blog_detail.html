@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+    <h2>{{ odin_post.title }}</h2>
+    <small>
+        {{ odin_post.created_on.date }} {{ odin_post.created_on.time }} |&nbsp;Categories:
+        {% for category in post_category %}
+            <p>{{ category.name }}</p>&nbsp;
+        {% endfor %}
+    </small>
+    {% comment %}<p>{{ odin_post.categories | linebreaks }}</p>{% endcomment %}
+    <p class="body" >
+        {{ odin_post.body }}
+    </p>
+    <h3>Your comment:</h3>
+</div>
+{% endblock %}
