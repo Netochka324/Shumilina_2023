@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Post, Category
+from .models import Post, Category, Comment
 
 
-admin.site.register(Post, list_display=["title", "body", "created_on", "categories"])
+admin.site.register(Post)
 admin.site.register(Category, list_display=["name"])
+admin.site.register(Comment)
 
 
 # @admin.register(Post)

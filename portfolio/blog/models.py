@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 
 
 class Category(models.Model):
@@ -16,7 +15,7 @@ class Post(models.Model):
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     lust_modified = models.DateTimeField(auto_now_add=True)
-    categories = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="post_category")
+    categories = models.ManyToManyField('Category', related_name='posts')
 
     class Meta:
         verbose_name = "Post"
@@ -31,29 +30,9 @@ class Comment(models.Model):
     author = models.CharField(max_length=30)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
         ordering = ("created_on",)
-
-# class Car(models.Model):  # многие к одному
-#     new_Car = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
-#
-#
-# class Toping(models.Model):
-#     pass
-#
-#
-# class Pizza(models.Model):  # многие ко многим
-#     toppings = models.ManyToMany(Toping)
-#
-#
-# class Place(models.Model):
-#     name = models.CharField(max_length=50)
-#     adress = models.CharField(max_length=40)
-#
-#
-# class Restayrant(models.Model):
-#     place=models.OneToOneField(Place)

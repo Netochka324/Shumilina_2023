@@ -1,17 +1,36 @@
 {% extends "base.html" %}
 {% block page_content %}
 <div class="col-md-8 offset-md-2">
-    <h2>{{ odin_post.title }}</h2>
+    <h1>{{ odin_post.title }}</h1>
     <small>
-        {{ odin_post.created_on.date }} {{ odin_post.created_on.time }} |&nbsp;Categories:
-        {% for category in post_category %}
-            <p>{{ category.name }}</p>&nbsp;
+        {{ odin_post.created_on.date }} | Категории:&nbsp;
+        {% for category in odin_post.categories.all %}
+        <a href="{% url 'blog_category' category.name%}">
+            {{ category.name }}
+        </a>&nbsp;
         {% endfor %}
     </small>
-    {% comment %}<p>{{ odin_post.categories | linebreaks }}</p>{% endcomment %}
-    <p class="body" >
-        {{ odin_post.body }}
+    <p>{{ odin_post.body | linebreaks }}</p>
+    <h3>Оставьте комментарий:</h3>
+    <form action="/blog/{{odin_post.pk}}/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.author }}
+        </div>
+        <div class="form-group">
+            {{ form.body }}
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+    <h3>Комментарии:</h3>
+    {% for comment in comments %}
+    <p>
+        {{comment.created_on.date }}
+        {{comment.created_on.time }}
+        <b>{{ comment.autor }}</b> написал:
     </p>
-    <h3>Your comment:</h3>
+    <p>{{ comment.body }}</p>
+    <hr>
+    {% endfor %}
 </div>
 {% endblock %}

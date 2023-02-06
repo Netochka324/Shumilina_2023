@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .models import Post, Category, Comment
+from .models import Post, Comment
+from .forms import CommentForm
+from django.http import HttpResponseRedirect
 
 
 def blog_index(request):
@@ -13,47 +15,31 @@ def blog_index(request):
 
 def blog_detail(request, pk):
     odin_post = Post.objects.get(pk=pk)
-    comment = Comment.objects.filter(post=odin_post)
-    post_category = Category.objects.filter(pk=pk)
-    return render(
-        request,
-        "blog_detail.html",
-        {"odin_post": odin_post, "comment": comment, "post_category": post_category}
-    )
-
-
-def blog_category_1(request):
-    posts = Post.objects.all()
-    return render(
-        request,
-        "blog_category1.html",
-        {"posts": posts}
-    )
-
-
-def blog_category_2(request):
-    posts = Post.objects.all()
-    return render(
-        request,
-        "blog_category1.html",
-        {"posts": posts}
-    )
-
-
-def blog_category_3(request):
-    posts = Post.objects.all()
-    return render(
-        request,
-        "blog_category3.html",
-        {"posts": posts}
-    )
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            my_comment = Comment(
+                author=form.cleaned_data['author'],
+                body=form.cleaned_data['body'],
+                post=odin_post
+            )
+            my_comment.save()
+            return HttpResponseRedirect(f'/blog/{pk}')
+    comments = Comment.objects.filter(post=odin_post)
+    context = {
+        'odin_post': odin_post,
+        'comments': comments,
+        'form': form
+    }  # закидываем в переменную словарь
+    return render(request, 'blog_detail.html', context)
 
 
 def blog_category_0(request, category):
-    posts = Post.objects.all()
-    categories = Category.objects.get(post_category=category)
+    posts = Post.objects.filter(
+        categories__name__contains=category).order_by("-created_on")
     return render(
         request,
         "blog_category.html",
-        {"posts": posts, "categories": categories}
+        {"posts": posts, "category": category}
     )
